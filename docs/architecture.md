@@ -6,9 +6,9 @@ OctoFit Tracker is a three-tier application for a school fitness program. The st
 
 ## Tier boundaries
 
-- **Presentation tier**: React 19, Vite, React Router, Bootstrap, and a shared API client in `octofit-tracker/frontend/src`.
-- **Logic tier**: Express and TypeScript routes/services in `octofit-tracker/backend/src` expose `/api/*` behavior on port `8000`.
 - **Data tier**: Mongoose models and seed data in `octofit-tracker/backend/src/models` and `src/scripts/seed.ts` persist to MongoDB on port `27017`.
+- **Logic tier**: Express and TypeScript routes/services in `octofit-tracker/backend/src` expose `/api/*` behavior on port `8000`.
+- **Presentation tier**: React 19, Vite, React Router, Bootstrap, and a shared API client in `octofit-tracker/frontend/src`.
 
 ## Ports and environment rules
 
@@ -30,9 +30,16 @@ OctoFit Tracker is a three-tier application for a school fitness program. The st
 
 Record your plan here before editing code.
 
-- Presentation tier decision:
-- Logic tier decision:
 - Data tier decision:
+    a) Add the required validation and relationships to the Mongoose models.
+    b) Make the seed script idempotent and stable enough for the tests in data.contract.test.ts.
+    c) This creates the contract foundation for the logic layer.
+- Logic tier decision:
+    a) Implement createActivity, createTeam, getLeaderboard, and suggestWorkouts in octofitService.ts.
+    b) Keep invalid IDs and unknown users as deliberate 4xx errors rather than 500s, per architecture.md.
+- Presentation tier decision:
+    a) Build the fetch-to-render behavior in the frontend using the API client in client.ts.
+    b) Only then add the loading/empty/error states and accessible alerts expected by app.contract.test.tsx.
 - Activity tracking approach:
 - Team management approach:
 - Leaderboard approach:
